@@ -47,7 +47,7 @@ for fname in images:
         # Keep only our first ten accepted images
         if count >= 10:
             break
-print(f"Set of first ten valid images from input folder: {valids}")
+print(f"(*) First ten valid input images:\n{valids}\n")
 
 # CALIBRATION
 
@@ -56,10 +56,12 @@ ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints,
                                                   gray.shape[::-1], 
                                                   None, 
                                                   None)
-print(f"Intrinsics camera matrix: \n\n{mtx}")
+print(f"(*) Intrinsics camera matrix:\n{mtx}\n")
+
 # save calibration data
 np.savez('out/calibration_data.npz', ret=ret, mtx=mtx, 
-         dist=dist, rvecs=rvec, tvecs=tvecs)
+         dist=dist, rvecs=rvecs, tvecs=tvecs)
+print(f"(*) Calibration data stored in 'out/calibration_data.npz'\n")
 
 # REPROJECTION ERROR
 
@@ -71,4 +73,4 @@ for i in range(len(objpoints)):
     error = cv.norm(imgpoints[i], imgpoints2, cv.NORM_L2)/len(imgpoints2)
     mean_error += error
 
-print(f"Total reprojection error: {mean_error/len(objpoints)}")
+print(f"(*) Total reprojection error: {mean_error/len(objpoints)}")
