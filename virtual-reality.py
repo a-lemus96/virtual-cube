@@ -1,5 +1,4 @@
 # standard library modules
-import argparser
 import glob
 from typing import Tuple
 
@@ -23,40 +22,48 @@ def draw_cube(
         img: scene where to draw the projected cube
         target_dir: target directory where to store result"""
 
-    # Lower vertices (touching the chessboard)
+    # lower vertices (touching the chessboard)
     vertex2_11 = projected_vertices[0].astype(np.int32)
     vertex2_21 = projected_vertices[1].astype(np.int32)
     vertex2_12 = projected_vertices[2].astype(np.int32)
     vertex2_22 = projected_vertices[3].astype(np.int32)
     
-    # Draw lower face of the cube
+    # draw lower face of the cube
     target = cv.line(target, vertex2_11, vertex2_21, (0, 165, 255), 18)
     target = cv.line(target, vertex2_12, vertex2_22, (0, 165, 255), 18)
     target = cv.line(target, vertex2_11, vertex2_12, (0, 165, 255), 18)
     target = cv.line(target, vertex2_21, vertex2_22, (0, 165, 255), 18)
     
-    # Upper vertices (above the chessboard)
+    # upper vertices (above the chessboard)
     vertex1_11 = projected_vertices[4].astype(np.int32)
     vertex1_21 = projected_vertices[5].astype(np.int32)
     vertex1_12 = projected_vertices[6].astype(np.int32)
     vertex1_22 = projected_vertices[7].astype(np.int32)
     
-    # Draw upper face of the cube
+    # draw upper face of the cube
     target = cv.line(target, vertex1_11, vertex1_21, (0, 165, 255), 18)
     target = cv.line(target, vertex1_12, vertex1_22, (0, 165, 255), 18)
     target = cv.line(target, vertex1_11, vertex1_12, (0, 165, 255), 18)
     target = cv.line(target, vertex1_21, vertex1_22, (0, 165, 255), 18)
      
-    # Connect both faces
+    # sonnect both faces
     target = cv.line(target, vertex1_11, vertex2_11, (0, 165, 255), 18)
     target = cv.line(target, vertex1_12, vertex2_12, (0, 165, 255), 18)
     target = cv.line(target, vertex1_21, vertex2_21, (0, 165, 255), 18)
     target = cv.line(target, vertex1_22, vertex2_22, (0, 165, 255), 18)
     
     plt.imshow(cv.cvtColor(target, cv.COLOR_BGR2RGB))
-    # Save image
-    cv.imwrite('out/projected/cube_' + str(i) + ".jpg", target)
+    # save image
+    cv.imwrite(f'{target_dir}/cube_' + str(i) + ".jpg", target)
 
+# create directories
+os.makedirs('out/projected', exist_ok=True)
+
+# load camera calibration data
+calibration_data = np.load('out/calibration_data.npz')
+
+# load images
+images = glob.glob('imgs/*.jpg')
 
 # set vertices of the cube a priori based on world-frame coordinates
 vertices = np.array([[2., 1., 0.], [2., 5., 0.],
@@ -64,11 +71,15 @@ vertices = np.array([[2., 1., 0.], [2., 5., 0.],
                      [2., 1., -4.], [2., 5., -4.],
                      [6., 1., -4.], [6., 5., -4.]])
 
-for i in range(len(valids)):
-    target = cv.imread(valids[i])
+for i in range(len(images)):
+    target = cv.imread(images[i])
     # project 3D points into the image
-    projected_vertices, _ = cv.projectPoints(vertices, rvecs[i], tvecs[i], mtx, dist)
+    projected_vertices, _ = cv.projectPoints(vertices,
+                                             rvecs[i],
+                                             tvecs[i],
+                                             mtx,
+                                             dist)
     projected_vertices = projected_vertices.reshape(16).reshape(8,2)
 
     # draw projected cube using projected vertices
-    draw_cube(projected_vertices, target, out_dir)
+    draw_cube(projected_vertices, target, 'out/projected')

@@ -1,5 +1,6 @@
 # standard library modules
 import glob
+import os
 
 # third-party modules
 import cv2 as cv
@@ -19,6 +20,9 @@ imgpoints = [] # 2d points in image plane.
 
 # keep only the first ten valid images
 images = glob.glob('imgs/*.jpg')
+
+# create output directories
+os.makedirs('out/points', exist_ok=True)
 
 count = 0 # this counter will keep track of how many valid images we have
 valids = [] # list to store valid images
