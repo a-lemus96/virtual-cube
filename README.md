@@ -27,10 +27,15 @@ It is important to note that camera calibration also stores extrinsic informatio
 
 ### Projecting a virtual cube onto the calibration images
 ---
+
+Now that we have our previously found camera matrix $K$ and camera poses $R$ for each of the valid frames in our calibration setting, we can start to ask ourselves: what if there was a virtual cube on top of the checkerboard? How would it look like in our valid calibration images? To answer this questions we use the projective camera model we described at the beginning and assume the cube is parameterized by its vertices. To project the virtual cube onto our images, we simply apply the linear mapping $KR$ to all the vertices and draw lines between them accordingly to draw the cube. We can do this because of the fact that 3D lines are mapped into 2D lines when using a distorsion-free camera model.
+
+To project our virtual cube, just run `python virtual-reality.py` and check `out/projected/` folder where you should find a set of images like these:
+
 <p align="center">
 <img src="https://user-images.githubusercontent.com/95151624/226233373-ece48423-2b41-4dcb-ada0-1ba2cb87fa29.gif"/>
 </p>
 
-$$
-  K = \frac{1}{2}
-$$
+Pretty cool, isn't it? Now you have a small glimpse on how virtual reality applications may be created. Of course, this is a simple case where we conveniently chose our object and our set of images to make a small demonstration. In practice, you may add more complex objects with textures as long as you have a way to describe them geometrically in object coordinate frame.
+
+Another important caveat is that we conveniently used our calibrated views as the target images since we already knew the camera pose for those frames. In more complex scenarios, you are likely to have to localize your camera to correctly project your virtual objects.
