@@ -1,5 +1,6 @@
 # standard library modules
 import glob
+import os
 from typing import Tuple
 
 # third-party modules
@@ -10,7 +11,7 @@ from matplotlib import pyplot as plt
 
 def draw_cube(
         proj_vertices: np.ndarray,
-        img: np.ndarray,
+        target: np.ndarray,
         target_dir: str) -> None:
     """Draw a virtual cube over the chessboard pattern for a particular image
     as if it were part of the scene. This kind of toy function illustrates the
@@ -19,8 +20,10 @@ def draw_cube(
     Args:
         proj_vertices: set of projected vertices of the cube in image
                        coordinates
-        img: scene where to draw the projected cube
-        target_dir: target directory where to store result"""
+        target: scene where to draw the projected cube
+        target_dir: target directory where to store result
+    Returns:
+        None"""
 
     # lower vertices (touching the chessboard)
     vertex2_11 = projected_vertices[0].astype(np.int32)
@@ -61,9 +64,11 @@ os.makedirs('out/projected', exist_ok=True)
 
 # load camera calibration data
 calibration_data = np.load('out/calibration_data.npz')
-
-# load images
-images = glob.glob('imgs/*.jpg')
+valids = calibration_data['valids'] # set of first ten valid images
+rvecs = calibration_data['rvecs']
+tvecs = calibration_data['tvecs']
+mtx = calibration_data['mtx']
+dist = calibration_data['dist']
 
 # set vertices of the cube a priori based on world-frame coordinates
 vertices = np.array([[2., 1., 0.], [2., 5., 0.],
@@ -71,8 +76,8 @@ vertices = np.array([[2., 1., 0.], [2., 5., 0.],
                      [2., 1., -4.], [2., 5., -4.],
                      [6., 1., -4.], [6., 5., -4.]])
 
-for i in range(len(images)):
-    target = cv.imread(images[i])
+for i in range(len(valids)):
+    target = cv.imread(valids[i])
     # project 3D points into the image
     projected_vertices, _ = cv.projectPoints(vertices,
                                              rvecs[i],

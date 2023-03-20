@@ -59,7 +59,7 @@ ret, mtx, dist, rvecs, tvecs = cv.calibrateCamera(objpoints,
 print(f"(*) Intrinsics camera matrix:\n{mtx}\n")
 
 # save calibration data
-np.savez('out/calibration_data.npz', ret=ret, mtx=mtx, 
+np.savez('out/calibration_data.npz', valids=np.array(valids), ret=ret, mtx=mtx, 
          dist=dist, rvecs=rvecs, tvecs=tvecs)
 print(f"(*) Calibration data stored in 'out/calibration_data.npz'\n")
 
