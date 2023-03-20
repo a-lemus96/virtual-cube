@@ -9,7 +9,7 @@ $$
   p^{i} \propto K R p^{w}
 $$
 
-describes how any 3D point or object point $p^{w} =[x, y, z, 1]^\top$ gets mapped into image point $p^{i}=[u,v,1]^\top$. Matrix $K\in \mathbb{R}^{3\times4}$ is the so-called intrinsics matrix which contains internal physical properties that model how object points are mapped directly from the camera coordinate frame into image points. Since camera frame is not aligned is not the case for many real-life applications, the extrinsics camera matrix $R\in\mathbb{R}^{4\times4}$ maps object point coordinates into their camera frame representation, this transformation is simply a rigid transformation in homogeneous coordinates.
+describes how any 3D point or object point $p^{w} =[x, y, z, 1]^\top$ gets mapped into image point $p^{i}=[u,v,1]^\top$. Matrix $K\in \mathbb{R}^{3\times4}$ is the so-called intrinsics matrix which contains internal physical properties that model how object points are mapped directly from the camera coordinate frame into image points. Since the camera frame is not aligned with the world frame in many real-life applications, the extrinsics camera matrix $R\in\mathbb{R}^{4\times4}$ maps object point coordinates into their camera frame representation, this transformation is simply a rigid transformation in homogeneous coordinates.
 
 In a nutshell, camera calibration consists any algorithm for computing or estimating camera matrix $K$ parameters using small pieces of information from the real-world. In this case, we consider those pieces of information to be prior object points coordinates lying over a planar surface. We use a set of images containing a checkerboard pattern and assume the world coordinate frame to be at one of the vertices of board.
 
