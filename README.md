@@ -21,7 +21,7 @@ We use OpenCV functionalities to compute $K$ from the set of images available in
 
 As the script filters input images, it stores the set of object points drawed on the input images in the `out/points/` folder. Once it finishes filtering and plotting points, performs camera calibration, displays camera matrix, stores the calibration data into `out/calibration_data.npz` and computes average reprojection error in pixels.
 
-![image](https://user-images.githubusercontent.com/95151624/226419267-ce49d31f-8004-4ef8-9e58-0db102c52c6f.png)
+![image](https://user-images.githubusercontent.com/95151624/226421438-273ee959-ee4a-4ca5-b250-245cc1210cab.png)
 
 It is important to note that camera calibration also stores extrinsic information for all valid views. Now that we have an internal and external mathematical modelling for each of the valid frames, it is time to use this information to create something cool!
 
