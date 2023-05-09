@@ -1,5 +1,5 @@
 # Projective Geometry for mapping a virtual cube
-Implementation of a mini-project to demonstrate the use of projective geometry in virtual reality applications. The project consists of a camera calibration script `opencv-calibrate.py` and a virtual cube reprojection script under the flashy `virtual-reality.py` name. Camera calibration script is based on the OpenCV camera calibration [tutorial](https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html).
+Implementation of a mini-project to demonstrate the use of projective geometry in augmented reality applications. The project consists of a camera calibration script `opencv-calibrate.py` and a virtual cube reprojection script under the flashy `virtual-reality.py` name. Camera calibration script is based on the OpenCV camera calibration [tutorial](https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html).
 
 ### Camera calibration
 ---
@@ -36,6 +36,6 @@ To project our virtual cube, just run `python virtual-reality.py` and check `out
 <img src="https://user-images.githubusercontent.com/95151624/226233373-ece48423-2b41-4dcb-ada0-1ba2cb87fa29.gif"/>
 </p>
 
-Pretty cool, isn't it? Now you have a small glimpse on how virtual reality applications may be created. Of course, this is a simple case where we conveniently chose our object and our set of images to make a small demonstration. In practice, you may add more complex objects with textures as long as you have a way to describe them geometrically in object coordinate frame.
+Pretty cool, isn't it? Now you have a small glimpse on how augmented reality applications may be created. Of course, this is a simple case where we conveniently chose our object and our set of images to make a small demonstration. In practice, you may add more complex objects with textures as long as you have a way to describe them geometrically in object coordinate frame.
 
 Another important caveat is that we conveniently used our calibrated views as the target images since we already knew the camera pose for those frames. In more complex scenarios, you are likely to have to localize your camera to correctly project your virtual objects.
