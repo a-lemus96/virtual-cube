@@ -1,4 +1,4 @@
-# Projective Geometry for mapping a virtual cube
+# Projective Geometry for Augmented Reality Applications
 Implementation of a mini-project to demonstrate the use of projective geometry in augmented reality applications. The project consists of a camera calibration script `opencv-calibrate.py` and a virtual cube reprojection script under the flashy `virtual-reality.py` name. Camera calibration script is based on the OpenCV camera calibration [tutorial](https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html).
 
 ### Camera calibration
